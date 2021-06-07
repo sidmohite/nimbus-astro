@@ -1,0 +1,38 @@
+#!/usr/bin/env python
+import numpy as np
+from astropy.time import Time
+import pandas as pd
+import healpy as hp
+import skymap_utils as sky_utils
+import argparse
+from glob import glob
+
+parser = argparse.ArgumentParser(description = 'Calculate the field probabilities and store them in file.', formatter_class = argparse.ArgumentDefaultsHelpFormatter, fromfile_prefix_chars='@')
+parser.add_argument('--field_probs_file', required = True, metavar = 'FIELD_PROB_FILE', help = 'File to save the field probabilities in.')
+parser.add_argument('--survey_file', required = True, metavar = 'SURVEY_FILE', help = 'File containing field, pixel and extinction specific information for the survey.')
+parser.add_argument('--skymap_file', required = True, metavar = 'SKYMAP_FILE', help = 'Skymap file for the event.')
+#parser.add_argument('--dir', required = True, metavar = 'LIKELIHOOD_FILES_DIR', help = 'Directory containing.')
+args = parser.parse_args()
+
+data = pd.read_csv('2019-04-01_2019-06-29_subdata.txt',sep='|',skiprows=[1])
+data.columns = data.columns.str.replace(' ','')
+
+df_survey = pd.read_pickle(args.survey_file)
+
+t_start = Time('2019-04-25T08:18:05',format='isot')
+t_end = Time('2019-04-28T08:18:05',format='isot')
+
+data_GW190425 = data.loc[(data['jd']>=t_start.jd)&(data['jd']<=t_end.jd),:]
+
+fields = np.unique(data_GW190425.field.values)
+field_probs = np.zeros(len(fields))
+
+infield_likelihood_files = np.sort(glob("extcut_2_mnorm_newnorm_fromdsamples/infield_likelihood_singleband_*txt"))
+skymap_prob = sky_utils.Skymap_Probability(skymap_fits_file=args.skymap_file)
+for i,field_file in enumerate(infield_likelihood_files):
+    field_num = int(field_file.split('infield_likelihood_singleband_')[1].split('.')[0])
+    print(field_num) 
+    ipix_field = df_survey.ipix.values[df_survey.field_ID==field_num][0]
+    field_probs[i] = skymap_prob.calculate_field_prob(ipix_field)
+
+np.savetxt(args.field_probs_file,field_probs)

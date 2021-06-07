@@ -1,0 +1,46 @@
+#!/usr/bin/env python
+import numpy as np
+import pandas as pd
+import argparse
+from glob import glob
+
+parser = argparse.ArgumentParser(description = 'Combine the in-field likelihoods to construct the final posterior', formatter_class = argparse.ArgumentDefaultsHelpFormatter, fromfile_prefix_chars='@')
+parser.add_argument('--sample_file', required = True, metavar = 'SAMPLE_FILE', help = 'File containing sample points')
+parser.add_argument('--field_probs_file', required = True, metavar = 'FIELD_PROB_FILE', help = 'File containing the total sky probability for each field.')
+parser.add_argument('--coverage_fraction', type = float, default=0, metavar = 'COV_FRAC', help = 'Assumed pseudo fraction of the event skymap that is surveyed by the telescope. Range(0-1)')
+parser.add_argument('--P_A', required = True, type = float, metavar = 'P_ASTRO', help = 'Probability of the event being astrophysical.Range(0-1)')
+parser.add_argument('--output_file', required = True, metavar = 'OUTPUT_FILE', help = 'Output file.')
+args = parser.parse_args()
+
+def combine_infield_likelihoods(infield_files):
+    infield_likelihoods = np.array([np.loadtxt(field_file) for field_file in infield_files])
+    likelihoods = np.sum(infield_likelihoods, axis=0)
+    return likelihoods
+
+def lnposterior_allsky(likelihoods, P_f, P_A, P_T):
+    return np.log((likelihoods + (1 - np.sum(P_f)))*P_A + P_T)
+
+def lnposterior_covfrac(likelihoods, P_f, cov_frac, P_A, P_T):
+    return np.log((likelihoods*cov_frac/np.sum(P_f) + (1 - cov_frac))*P_A + P_T)
+
+infield_files = np.sort(glob("extcut_2_mnorm_newnorm_fromdsamples/infield_likelihood_singleband_*.txt"))
+infield_likelihoods = np.array([np.loadtxt(field_file) for field_file in infield_files])
+#fields_bool = np.array([len(x)==2000 for x in infield_likelihoods])
+#correct_field_files = infield_files[fields_bool]
+#field_nums = np.array([int(field_file.split('infield_likelihood_singleband_')[1].split('.')[0]) for field_file in correct_field_files],dtype='int')
+#np.savetxt(args.output_file, field_nums)
+samples = np.loadtxt(args.sample_file)
+N_samples = len(samples)
+likelihoods = combine_infield_likelihoods(infield_files)
+#likelihoods = np.sum(infield_likelihoods[fields_bool],axis=0)
+P_f = np.loadtxt(args.field_probs_file)
+if args.coverage_fraction:
+#    cov_fracs = np.linspace(0.1,0.9,9)
+#    pastros = np.linspace(0.1,0.9,9)
+    ln_posterior = lnposterior_covfrac(likelihoods, P_f, args.coverage_fraction, args.P_A, 1.-args.P_A)
+#    for i,pastro in enumerate(pastros):
+#        ln_posteriors[:,i+1] = lnposterior_covfrac(likelihoods, P_f, args.coverage_fraction, pastro, 1.-pastro)
+#    ln_posteriors[:,0] = lnposterior_covfrac(likelihoods, P_f, args.coverage_fraction, 0.01, 0.99)
+else:
+    ln_posterior = lnposterior_allsky(likelihoods, P_f, args.P_A, 1.-args.P_A)
+np.savetxt(args.output_file,np.c_[samples,ln_posterior])
