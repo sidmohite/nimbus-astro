@@ -190,12 +190,14 @@ class Kilonova_Inference():
             return 1./(mhigh-mlow)
         elif (N_samples_survey!=0)&(N_samples_high==0):
             return np.sum((1./(
-                         np.vectorize(self.M_to_m)(M, dist_samples_survey) - mlow))*np.vectorize(expit_func)(dist_samples_survey))\
-                         /N_samples_survey
+                         np.vectorize(
+                         self.M_to_m)(M, dist_samples_survey) -mlow))*\
+                         np.vectorize(expit_func)(dist_samples_survey))/\
+                         N_samples_survey
         elif (N_samples_survey!=0)&(N_samples_high!=0):
             return N_samples_survey/N_total * np.sum((1./(
                    np.vectorize(self.M_to_m)(M, dist_samples_survey) - mlow))*\
-                   np.vectorize(expit_func)(dist_samples_survey)) +
+                   np.vectorize(expit_func)(dist_samples_survey)) +\
                    (N_samples_high/N_total) * (1./(mhigh-mlow))
         return 0.
 
@@ -268,7 +270,9 @@ class Kilonova_Inference():
             quad(lambda d : (1./(m_high - m_low))*p_d(d), self.dlim(m_high,M),
             dmax)[0]
         den = quad(
-            lambda m: quad(lambda d : (1./(self.M_to_m(M, d) -\ m_low))*self.calc_expit_argument(self.dlim(m,M),maglim_err)(d)*\
+            lambda m: quad(
+            lambda d : (1./(self.M_to_m(M, d) - m_low))*\
+            self.calc_expit_argument(self.dlim(m,M),maglim_err)(d)*\
             p_d(d), self.dlim(m_low,M)+eps,
             self.dlim(m_high,M))[0], m_low, m_high)[0] +\
             quad(lambda d : p_d(d), self.dlim(m_high,M), dmax)[0]
