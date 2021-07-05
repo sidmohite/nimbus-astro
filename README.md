@@ -47,7 +47,7 @@ observed field and passband filter as well as associated observation times.
 ## Running Executables
 In order to perform the inference, we need to run the executables given in this package in a specific order:
 
-### Single-field inference
+### Step 1 : Single-field inference
 To find the likelihood for the data in a given field given the hyperparameter samples, we can make use of the 
 `singlefield_calc` [executable](https://github.com/sidmohite/nimbus-astro/blob/master/nimbus/singlefield_calc).
 Since a survey would, in general, contain a large number of observed fields with associated data, it is ideal to 
@@ -79,3 +79,8 @@ run this executable with parallelized instances on a computing framework such as
                             The common string pattern for the files that save the
                             likelhood values for each field.
                             
+### Step 2 : Compute field probabilities
+The next step in the inference involves computing the overall probability of the kilonova event being localized
+within each field for which we ran [Step 1](https://github.com/sidmohite/nimbus-astro/edit/master/README.md#) above. This is calculated from the survey and skymap files provided for the event, using the
+`compute_field_probs` [executable](https://github.com/sidmohite/nimbus-astro/blob/master/nimbus/compute_field_probs)
+
