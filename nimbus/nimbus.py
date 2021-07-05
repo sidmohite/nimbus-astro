@@ -5,7 +5,6 @@ The main module of nimbus that sets up the Bayesian formalism.
 Classes:
 
     Kilonova_Inference
-    Sampler
 """
 
 __author__ = 'Siddharth Mohite'
