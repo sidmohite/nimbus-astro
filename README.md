@@ -81,6 +81,58 @@ run this executable with parallelized instances on a computing framework such as
                             
 ### Step 2 : Compute field probabilities
 The next step in the inference involves computing the overall probability of the kilonova event being localized
-within each field for which we ran [Step 1](https://github.com/sidmohite/nimbus-astro/edit/master/README.md#) above. This is calculated from the survey and skymap files provided for the event, using the
-`compute_field_probs` [executable](https://github.com/sidmohite/nimbus-astro/blob/master/nimbus/compute_field_probs)
+within each field for which we ran [Step 1](https://github.com/sidmohite/nimbus-astro/blob/master/README.md#step-1--single-field-inference)
+above. This is calculated from the survey and skymap files provided for the event, using the `compute_field_probs` [executable](https://github.com/sidmohite/nimbus-astro/blob/master/nimbus/compute_field_probs) and is used in the generation of the posterior values for
+each hyperparameter sample when we combine field likelihoods in [Step 3](https://github.com/sidmohite/nimbus-astro/blob/master/README.md#step-3--combine-field-likelihoods).
 
+    usage: compute_field_probs [-h] --field_probs_file FIELD_PROB_FILE
+                           --survey_file SURVEY_FILE --skymap_file SKYMAP_FILE
+                           --infield_likelihoods_path INFIELD_LIKELIHOODS_PATH
+
+    Calculate the field probabilities and store them in file.
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --field_probs_file FIELD_PROB_FILE
+                            File to save the field probabilities in.
+      --survey_file SURVEY_FILE
+                            File containing field, pixel and extinction specific
+                            information for the survey.
+      --skymap_file SKYMAP_FILE
+                            Skymap file for the event.
+      --infield_likelihoods_path INFIELD_LIKELIHOODS_PATH
+                            Path to files containing sample likelihood values for
+                            each field. The code expects files to be named using a
+                            common string pattern (see below) with the field
+                            number appended at the end.
+                           
+### Step 3 : Combine field likelihoods
+The final step in the inference is to combine the individual field likelihoods and field probabilites from Steps 1 and 2
+to give us the log-posterior values for each hyperparameter sample. This is done using the `combine_fields` [executable](https://github.com/sidmohite/nimbus-astro/blob/master/nimbus/combine_fields).
+
+    usage: combine_fields [-h] --sample_file SAMPLE_FILE --field_probs_file
+                      FIELD_PROB_FILE --infield_likelihoods_path
+                      INFIELD_LIKELIHOODS_PATH [--coverage_fraction COV_FRAC]
+                      --P_A P_ASTRO --output_file OUTPUT_FILE
+
+    Combine the in-field likelihoods to construct the final posterior
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --sample_file SAMPLE_FILE
+                            File containing sample points.
+      --field_probs_file FIELD_PROB_FILE
+                            File containing the total sky probability for each
+                            field.
+      --infield_likelihoods_path INFIELD_LIKELIHOODS_PATH
+                            Path to files containing sample likelihood values for
+                            each field. The code expects files to be named using a
+                            common string pattern (see below) with the field
+                            number appended at the end.
+      --coverage_fraction COV_FRAC
+                            Assumed pseudo fraction of the event skymap that is
+                            surveyed by the telescope. Range(0-1) (default: 0)
+      --P_A P_ASTRO         Probability of the event being
+                            astrophysical.Range(0-1).
+      --output_file OUTPUT_FILE
+                            Output file.
