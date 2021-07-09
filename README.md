@@ -2,8 +2,8 @@
 nimbus is a hierarchical Bayesian framework to infer the intrinsic luminosity parameters
 of kilonovae (KNe) associated with gravitational-wave (GW) events, based purely on non-detections.
 This framework makes use of GW 3-D distance information and electromagnetic upper limits from
-a given survey for multiple events, and self-consistently accounts for finite sky-coverage and prob-
-ability of astrophysical origin.
+a given survey for multiple events, and self-consistently accounts for finite sky-coverage and 
+probability of astrophysical origin.
 
 ## Installation
 nimbus can be installed using the following commands:
