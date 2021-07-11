@@ -7,7 +7,7 @@ long_description = (here / 'README.md').read_text(encoding='utf-8')
 
 setup(
     # Needed to silence warnings (and to be a worthwhile package)
-    name='nimbus-astro',
+    name='nimbus',
     url='https://github.com/sidmohite/nimbus-astro',
     author='Siddharth Mohite',
     author_email='srmohite@uwm.edu',
