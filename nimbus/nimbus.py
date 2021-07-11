@@ -10,11 +10,10 @@ Classes:
 __author__ = 'Siddharth Mohite'
 
 import numpy as np
-import matplotlib.pyplot as plt
 from scipy.stats import norm, truncnorm
 from scipy.integrate import quad
 from scipy.special import expit
-from multiprocessing import Pool, Process
+from multiprocessing import Pool
 from functools import partial
 
 class Kilonova_Inference():

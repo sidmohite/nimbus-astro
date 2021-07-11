@@ -15,7 +15,7 @@ setup(
     packages=find_packages(where='nimbus'),
     python_requires='>=3.6, <4',
     # Needed for dependencies
-    install_requires=['numpy','scipy','astropy','pandas'],
+    install_requires=['numpy','scipy','astropy','pandas','healpy'],
     # *strongly* suggested for sharing
     version='1.0.0',
     # The license can be anything you like
