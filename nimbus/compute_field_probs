@@ -25,6 +25,10 @@ parser.add_argument('--infield_likelihoods_path', required = True,
                    for each field. The code expects files to be named using a\
                    common string pattern (see below) with the field number\
                    appended at the end.')
+parser.add_argument('--common_str', required = True,
+                   metavar = 'COMMON_STR',
+                   help = 'The common string pattern (see below) the code\
+                   expects the files to be named with.')
 args = parser.parse_args()
 
 df_survey = pd.read_pickle(args.survey_file)
@@ -33,8 +37,7 @@ infield_likelihood_files = np.sort(glob(args.infield_likelihoods_path))
 field_probs = np.zeros(len(infield_likelihood_files))
 skymap_prob = sky_utils.Skymap_Probability(skymap_fits_file=args.skymap_file)
 for i,field_file in enumerate(infield_likelihood_files):
-    field_num = int(field_file.split(
-                   'infield_likelihood_singleband_')[1].split('.')[0])
+    field_num = int(field_file.split(args.common_str)[1].split('.')[0])
     ipix_field = df_survey.ipix.values[df_survey.field_ID==field_num][0]
     field_probs[i] = skymap_prob.calculate_field_prob(ipix_field)
 
