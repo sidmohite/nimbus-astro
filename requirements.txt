@@ -1,1 +1,6 @@
+numpy
+scipy
+pandas
+astropy
+healpy
 setuptools==57.1.0
