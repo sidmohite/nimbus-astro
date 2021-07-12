@@ -12,6 +12,8 @@ nimbus can be installed using the following commands:
     
     cd nimbus-astro
     
+    pip install -r requirements.txt
+    
     python setup.py install
     
 Note : For best results, installation should be done into a virtual Python/Anaconda environment.
