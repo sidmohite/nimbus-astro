@@ -36,7 +36,7 @@ sample_file = options.sample_file
 survey_file = options.survey_file
 data_file = options.data_file
 t_start = Time(options.t_start,format='isot')
-t_end = Time(option.t_end,format='isot')
+t_end = Time(options.t_end,format='isot')
 
 def get_mlims_from_data(df, field_num, T):
     return np.array([np.median(df[(df.field.values==field_num)&\
@@ -84,8 +84,8 @@ else:
     ext_r = df_survey.A_r.values[df_survey.field_ID==field_num][0]
     ext_i = df_survey.A_i.values[df_survey.field_ID==field_num][0]
 
-data = pd.read_csv(options.data_file,sep='|',skiprows=[1])
-data.columns = data.columns.str.replace(' ','')
+data = pd.read_csv(options.data_file)
+#data.columns = data.columns.str.replace(' ','')
 
 data_event = data.loc[(data['jd']>=t_start.jd)&(data['jd']<=t_end.jd),:]
 
@@ -107,7 +107,7 @@ skymap_prob = sky_utils.Skymap_Probability(
                                           skymap_fits_file=options.skymap_file)
 ipix_field = df_survey.ipix.values[df_survey.field_ID==field_num][0]
 field_prob = skymap_prob.calculate_field_prob(ipix_field)
-p_d_f, dmin, dmax = skymap_prob.construct_margdist_distribution(ipix_field,
+p_d_f = skymap_prob.construct_margdist_distribution(ipix_field,
                                                                field_prob)
 
 kne_inf = nimbus.Kilonova_Inference(

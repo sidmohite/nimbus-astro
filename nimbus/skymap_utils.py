@@ -62,7 +62,7 @@ class Skymap_Probability():
         self.distsigma = distsigma
         self.distnorm = distnorm
 
-    def calculate_field_probs(self, ipix_field):
+    def calculate_field_prob(self, ipix_field):
         """
         Returns the total probability contained within each field.
 
