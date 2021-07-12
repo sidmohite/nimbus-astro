@@ -13,8 +13,13 @@ setup(
     author_email='srmohite@uwm.edu',
     # Needed to actually package something
     packages=find_packages(include=['nimbus','nimbus.*']),
-    scripts=['nimbus/singlefield_calc','nimbus/compute_field_probs',\
-           'nimbus/combine_fields'],
+    entry_points={
+        "console_scripts": [
+            "singlefield_calc=nimbus.scripts.singlefield_calc:main",
+            "compute_field_probs=nimbus.scripts.compute_field_probs:main",
+            "combine_fields=nimbus.scripts.combine_fields:main",
+        ],
+    },
     python_requires='>=3.6, <4',
     # Needed for dependencies
     install_requires=['numpy','scipy','astropy','pandas','healpy'],
