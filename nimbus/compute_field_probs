@@ -2,7 +2,7 @@
 import numpy as np
 from astropy.time import Time
 import pandas as pd
-import skymap_utils as sky_utils
+from nimbus import skymap_utils as sky_utils
 import argparse
 from glob import glob
 

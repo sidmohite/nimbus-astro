@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 from astropy.time import Time
 import pandas as pd
 from scipy.integrate import quad
-import nimbus
-import skymap_utils as sky_utils
+from nimbus import nimbus
+from nimbus import skymap_utils as sky_utils
 from multiprocessing import Pool
 import sys
 from optparse import OptionParser
