@@ -16,7 +16,8 @@ nimbus can be installed using the following commands:
     
     python setup.py install
     
-Note : It is recommended that installation be done into a virtual Python/Anaconda environment.
+Note : It is recommended that installation be done into a virtual Python/Anaconda environment with
+python >=3.6 and <4.
 
 ## Data Inputs
 In order to use nimbus to constrain kilonova models we first need to ensure we have the relevant
