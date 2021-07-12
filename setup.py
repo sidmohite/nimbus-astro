@@ -12,7 +12,7 @@ setup(
     author='Siddharth Mohite',
     author_email='srmohite@uwm.edu',
     # Needed to actually package something
-    packages=find_packages(where='nimbus'),
+    packages=find_packages(include=['nimbus','nimbus.*']),
     scripts=['nimbus/singlefield_calc','nimbus/compute_field_probs',\
            'nimbus/combine_fields'],
     python_requires='>=3.6, <4',
