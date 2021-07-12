@@ -149,3 +149,8 @@ The final data product is a file containing the hyperparameter samples and corre
 
 An example jupyter notebook demonstrating the basic inference and associated data are provided in the 
 `examples/` directory in this repository.
+
+## Citation
+If you use this package in a publication please cite [Mohite et al. (2021)](arxiv_link)
+
+    add bibtex entry here
