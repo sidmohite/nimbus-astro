@@ -13,6 +13,8 @@ setup(
     author_email='srmohite@uwm.edu',
     # Needed to actually package something
     packages=find_packages(where='nimbus'),
+    scripts=['nimbus/singlefield_calc','nimbus/compute_field_probs',\
+           'nimbus/combine_fields'],
     python_requires='>=3.6, <4',
     # Needed for dependencies
     install_requires=['numpy','scipy','astropy','pandas','healpy'],
@@ -21,7 +23,7 @@ setup(
     # The license can be anything you like
     license='MIT',
     description='A hierarchical Bayesian inference framework to constrain\
-	       kilonova population properties.',
+kilonova population properties.',
     # We will also need a readme eventually (there will be a warning)
     long_description=long_description,
     long_description_content_type='text/markdown',
