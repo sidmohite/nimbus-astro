@@ -142,3 +142,6 @@ to give us the log-posterior values for each hyperparameter sample. This is done
                             Output file.
 
 The final data product is a file containing the hyperparameter samples and correpsonding log-posterior values.
+
+An example jupyter notebook demonstrating the basic inference and associated data are provided in the 
+`examples/` directory in this repository.
