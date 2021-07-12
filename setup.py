@@ -17,7 +17,7 @@ setup(
            'nimbus/combine_fields'],
     python_requires='>=3.6, <4',
     # Needed for dependencies
-    install_requires=['numpy','scipy','astropy','pandas','healpy','setuptools'],
+    install_requires=['numpy','scipy','astropy','pandas','healpy'],
     # *strongly* suggested for sharing
     version='1.0.0',
     # The license can be anything you like
