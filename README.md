@@ -88,6 +88,7 @@ each hyperparameter sample when we combine field likelihoods in [Step 3](https:/
     usage: compute_field_probs [-h] --field_probs_file FIELD_PROB_FILE
                            --survey_file SURVEY_FILE --skymap_file SKYMAP_FILE
                            --infield_likelihoods_path INFIELD_LIKELIHOODS_PATH
+                           --common_str COMMON_STR
 
     Calculate the field probabilities and store them in file.
 
@@ -105,14 +106,17 @@ each hyperparameter sample when we combine field likelihoods in [Step 3](https:/
                             each field. The code expects files to be named using a
                             common string pattern (see below) with the field
                             number appended at the end.
+      --common_str COMMON_STR
+                            The common string pattern (see below) the code expects
+                            the files to be named with.
                            
 ### Step 3 : Combine field likelihoods
 The final step in the inference is to combine the individual field likelihoods and field probabilites from Steps 1 and 2
 to give us the log-posterior values for each hyperparameter sample. This is done using the `combine_fields` [executable](https://github.com/sidmohite/nimbus-astro/blob/master/nimbus/combine_fields).
 
     usage: combine_fields [-h] --sample_file SAMPLE_FILE --field_probs_file
-                      FIELD_PROB_FILE --infield_likelihoods_path
-                      INFIELD_LIKELIHOODS_PATH [--coverage_fraction COV_FRAC]
+                      FIELD_PROB_FILE --infield_likelihoods_str
+                      INFIELD_LIKELIHOODS_STR [--coverage_fraction COV_FRAC]
                       --P_A P_ASTRO --output_file OUTPUT_FILE
 
     Combine the in-field likelihoods to construct the final posterior
@@ -124,8 +128,8 @@ to give us the log-posterior values for each hyperparameter sample. This is done
       --field_probs_file FIELD_PROB_FILE
                             File containing the total sky probability for each
                             field.
-      --infield_likelihoods_path INFIELD_LIKELIHOODS_PATH
-                            Path to files containing sample likelihood values for
+      --infield_likelihoods_str INFIELD_LIKELIHOODS_STR
+                            Common string for files containing sample likelihood values for
                             each field. The code expects files to be named using a
                             common string pattern (see below) with the field
                             number appended at the end.
