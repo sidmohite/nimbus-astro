@@ -10,34 +10,6 @@ from multiprocessing import Pool
 import sys
 from optparse import OptionParser
 
-parser = OptionParser()
-parser.add_option("--field", type = "int", help = "Field number to calculate \
-the likelihood for.")
-parser.add_option("--data_file", type = "str", help = "File containing all \
-observational data for the event from the survey.")
-parser.add_option("--survey_file", type = "str", help = "File containing \
-field, pixel and extinction specific information for the survey.")
-parser.add_option("--skymap_file", type = "str", help = "Skymap file for the \
-event.")
-parser.add_option("--sample_file", type = "str", help = "File containing the \
-points in parameter space to calculate the log-posterior for.")
-parser.add_option("--t_start", type = "str", help = "The start time of the \
-data for the event. Format must be in isot.")
-parser.add_option("--t_end", type = "str", help = "The end time of the data \
-for the event. Format must be in isot.")
-parser.add_option("--single_band", action = 'store_true', dest = "single_band",
- help = "Indicator that makes the analysis a single-band calculation.")
-parser.add_option("--output_str", type = "str", help = "The common string \
-pattern for the files that save the likelhood values for each field.")
-(options, args) = parser.parse_args()
-
-field_num = options.field
-sample_file = options.sample_file
-survey_file = options.survey_file
-data_file = options.data_file
-t_start = Time(options.t_start,format='isot')
-t_end = Time(options.t_end,format='isot')
-
 def get_mlims_from_data(df, field_num, T):
     return np.array([np.median(df[(df.field.values==field_num)&\
                    (df.jd.values==t)&(df.status==1)].scimaglim.values) for t
@@ -144,5 +116,33 @@ def main(field, data_file, sample_file, survey_file, skymap_file, t_start,
 	f.close()
 
 if __name__ == "__main__":
+    parser = OptionParser()
+    parser.add_option("--field", type = "int", help = "Field number to\
+    calculate the likelihood for.")
+    parser.add_option("--data_file", type = "str", help = "File containing\
+    all observational data for the event from the survey.")
+    parser.add_option("--survey_file", type = "str", help = "File containing\
+    field, pixel and extinction specific information for the survey.")
+    parser.add_option("--skymap_file", type = "str", help = "Skymap file for\
+    the event.")
+    parser.add_option("--sample_file", type = "str", help = "File containing\
+    the points in parameter space to calculate the log-posterior for.")
+    parser.add_option("--t_start", type = "str", help = "The start time of\
+    the data for the event. Format must be in isot.")
+    parser.add_option("--t_end", type = "str", help = "The end time of the\
+    data for the event. Format must be in isot.")
+    parser.add_option("--single_band", action = 'store_true',
+    dest = "single_band", help = "Indicator that makes the analysis a\
+    single-band calculation.")
+    parser.add_option("--output_str", type = "str", help = "The common string\
+    pattern for the files that save the likelhood values for each field.")
+    (options, args) = parser.parse_args()
+
+    field_num = options.field
+    sample_file = options.sample_file
+    survey_file = options.survey_file
+    data_file = options.data_file
+    t_start = Time(options.t_start,format='isot')
+    t_end = Time(options.t_end,format='isot')
     main(field_num, data_file, sample_file, survey_file, skymap_file, t_start,
         t_end, output_str)
