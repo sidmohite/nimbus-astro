@@ -13,7 +13,6 @@ setup(
     author_email='srmohite@uwm.edu',
     # Needed to actually package something
     packages=find_packages(include=['nimbus','nimbus.*']),
-    scripts=['nimbus/singlefield_calc','nimbus/compute_field_probs','nimbus/combine_fields'],
     entry_points={
         "console_scripts": [
             "singlefield_calc=nimbus.scripts.singlefield_calc:main",
