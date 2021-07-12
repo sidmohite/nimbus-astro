@@ -7,6 +7,7 @@ from nimbus import nimbus
 from nimbus import skymap_utils as sky_utils
 from multiprocessing import Pool
 import sys
+from optparse import OptionParser
 
 def get_mlims_from_data(df, field_num, T):
     return np.array([np.median(df[(df.field.values==field_num)&\
@@ -46,10 +47,39 @@ def calc_norm_factors(p_d_f, maglim_errs, mlow, mhigh):
                                maglim_errs])
     return norm_factors
 
-def singlefield_calc(field, data_file, sample_file, survey_file, skymap_file,
-                    t_start, t_end, output_str, single_band=False)
-    df_survey = pd.read_pickle(survey_file)
+def main():
+    parser = OptionParser()
+    parser.add_option("--field", type = "int", help = "Field number to calculate\
+    the likelihood for.")
+    parser.add_option("--data_file", type = "str", help = "File containing all\
+    observational data for the event from the survey.")
+    parser.add_option("--survey_file", type = "str", help = "File containing\
+    field, pixel and extinction specific information for the survey.")
+    parser.add_option("--skymap_file", type = "str", help = "Skymap file for the\
+    event.")
+    parser.add_option("--sample_file", type = "str", help = "File containing the\
+    points in parameter space to calculate the log-posterior for.")
+    parser.add_option("--t_start", type = "str", help = "The start time of the\
+    data for the event. Format must be in isot.")
+    parser.add_option("--t_end", type = "str", help = "The end time of the data\
+    for the event. Format must be in isot.")
+    parser.add_option("--single_band", action = 'store_true',
+    dest = "single_band", help = "Indicator that makes the analysis a single-band\
+    calculation.")
+    parser.add_option("--output_str", type = "str", help = "The common string\
+    pattern for the files that save the likelhood values for each field.")
+    (options, args) = parser.parse_args()
 
+    field_num = options.field
+    sample_file = options.sample_file
+    survey_file = options.survey_file
+    skymap_file = options.skymap_file
+    data_file = options.data_file
+    t_start = Time(options.t_start,format='isot')
+    t_end = Time(options.t_end,format='isot')
+    output_str = options.output_str
+
+    df_survey = pd.read_pickle(survey_file)
     if df_survey.ebv.values[df_survey.field_ID==field_num][0] > 2.:
         sys.exit('Field has high extinction. Aborting inference.')
 
@@ -112,3 +142,6 @@ def singlefield_calc(field, data_file, sample_file, survey_file, skymap_file,
     with open(output_str+str(field_num)+'.txt','ab') as f:
         np.savetxt(f,y,fmt='%.5f')
     f.close()
+
+if __name__=='__main__':
+    main()
