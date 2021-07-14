@@ -1,4 +1,4 @@
-# nimbus - A Bayesian inference framework to constrain kilonovae models
+# nimbus - A Bayesian inference framework to constrain kilonova models
 nimbus is a hierarchical Bayesian framework to infer the intrinsic luminosity parameters
 of kilonovae (KNe) associated with gravitational-wave (GW) events, based purely on non-detections.
 This framework makes use of GW 3-D distance information and electromagnetic upper limits from
@@ -22,7 +22,9 @@ version of `setuptools` (currently fixed to version `57.1.0` here).
 
 ## Data Inputs
 In order to use nimbus to constrain kilonova models we first need to ensure we have the relevant
-data files and that they have specfic attributes that will be used by the code:
+data files and that they have specfic attributes that will be used by the code.
+**Note : The data formats and code presented in this repository are based on the Zwicky Transient Facility (ZTF).
+However, the code can be easily modified to be able to account for other surveys.** 
 
 * A `survey file` containing field, pixel and extinction specific information for the survey.
     * Currently the code expects this file to exist as a Python pickle  - `.pkl` file.
@@ -39,7 +41,7 @@ observed field and passband filter as well as associated observation times.
         * `scimaglim` - Limiting magnitude in the science image (at each CCD/observation point) for each observation.
         * `field` - Field ID (integer) labelling the field for the corresponding observation.
         * `fid` - Filter ID (integer) labelling the passband filter used for the corresponding observation.
-        * `status` - Status number (interger) indicating if the observation is good to use for the analysis. Convention :
+        * `status` - Status number (integer) indicating if the observation is good to use for the analysis. Convention :
           `status=1` refers to a "good" observation. 
     
 * A `skymap file` containing the 3-D GW skymap localization information.
@@ -147,7 +149,7 @@ to give us the log-posterior values for each hyperparameter sample. This is done
 
 The final data product is a file containing the hyperparameter samples and correpsonding log-posterior values.
 
-An example jupyter notebook demonstrating the basic inference and associated data are provided in the 
+An example jupyter notebook demonstrating the basic inference and associated data is provided in the 
 `examples/` directory in this repository.
 
 ## Citation
