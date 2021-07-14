@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 A module for handling skymaps and associated utilities.
 
