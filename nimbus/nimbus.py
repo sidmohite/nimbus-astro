@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 The main module of nimbus that sets up the Bayesian formalism.
 
