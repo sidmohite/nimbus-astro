@@ -154,6 +154,6 @@ An example jupyter notebook demonstrating the basic inference and associated dat
 `examples/` directory in this repository.
 
 ## Citation
-If you use this package in a publication please cite [Mohite et al. (2021)](arxiv_link)
+If you use this package in a publication please cite [Mohite et al. (2021)](https://arxiv.org/abs/2107.07129)
 
     add bibtex entry here
