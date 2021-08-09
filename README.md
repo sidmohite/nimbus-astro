@@ -155,5 +155,4 @@ An example jupyter notebook demonstrating the basic inference and associated dat
 
 ## Citation
 If you use this package in a publication please cite [Mohite et al. (2021)](https://arxiv.org/abs/2107.07129)
-
-    add bibtex entry here
+    <a href="https://ascl.net/2107.008"><img src="https://img.shields.io/badge/ascl-2107.008-blue.svg?colorB=262255" alt="ascl:2107.008" /></a>
