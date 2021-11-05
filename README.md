@@ -154,4 +154,5 @@ An example jupyter notebook demonstrating the basic inference and associated dat
 `examples/` directory in this repository.
 
 ## Citation
-If you use this package in a publication please cite the paper [Mohite et al. (2021)](https://arxiv.org/abs/2107.07129) and package on Zenodo [![DOI](https://zenodo.org/badge/374686703.svg)](https://zenodo.org/badge/latestdoi/374686703)
+If you use this package in a publication please cite the paper [Mohite et al. (2021)](https://arxiv.org/abs/2107.07129) and package on Zenodo
+    <a href="https://zenodo.org/badge/latestdoi/374686703"><img src="https://zenodo.org/badge/374686703.svg" alt="DOI"></a>
