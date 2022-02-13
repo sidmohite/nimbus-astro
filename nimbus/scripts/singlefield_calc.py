@@ -77,6 +77,7 @@ def main():
     data_file = options.data_file
     t_start = Time(options.t_start,format='isot')
     t_end = Time(options.t_end,format='isot')
+    single_band = options.single_band
     output_str = options.output_str
 
     df_survey = pd.read_pickle(survey_file)
