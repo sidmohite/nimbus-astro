@@ -56,10 +56,10 @@ class Skymap_Probability():
                                                        field=range(4))
         npix = len(prob)
         self.nside = hp.npix2nside(npix)
-        self.prob = prob
-        self.distmu = distmu
-        self.distsigma = distsigma
-        self.distnorm = distnorm
+        self.prob = hp.ud_grade(prob, 256)
+        self.distmu = hp.ud_grade(distmu, 256)
+        self.distsigma = hp.ud_grade(distsigma, 256)
+        self.distnorm = hp.ud_grade(distnorm, 256)
 
     def calculate_field_prob(self, ipix_field):
         """
