@@ -98,8 +98,6 @@ class Skymap_Probability():
         sd = np.sqrt(quad(lambda x: x**2 * dp_dr(x), 0, np.inf)[0] - mean**2)
         dmin = np.maximum(1,mean - 5*sd)
         dmax = mean + 5*sd
-        approx_dist_samples = truncnorm((dmin-mean)/sd, (dmax-mean)/sd, mean,
-                                       sd).rvs(3000)
         approx_dist_pdf = truncnorm((dmin-mean)/sd, (dmax-mean)/sd, mean,
                                    sd).pdf
         return approx_dist_pdf
